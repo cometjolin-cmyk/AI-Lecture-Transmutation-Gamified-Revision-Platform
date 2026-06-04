@@ -1,10 +1,10 @@
 {
-  "projectId": "perfect-airline-z07pf",
-  "appId": "1:513757313997:web:ef228f5d1a568e37c52284",
-  "apiKey": "AIzaSyAgcV8rOHb8ufmmIKCbKpnrwij4oIq1v88",
-  "authDomain": "perfect-airline-z07pf.firebaseapp.com",
-  "firestoreDatabaseId": "ai-studio-aafc15e5-2841-43e1-aa33-c432708d433a",
-  "storageBucket": "perfect-airline-z07pf.firebasestorage.app",
-  "messagingSenderId": "513757313997",
-  "measurementId": ""
+  "projectId": "ai-lecture-transmutation",
+  "appId": "1:2745599700:web:b1ce563925aade0fd7dd41",
+  "apiKey": "AIzaSyDrvmUPKHvnEQPMri6SUABeNFI7x9JIcaw",
+  "authDomain": "ai-lecture-transmutation.firebaseapp.com",
+  "firestoreDatabaseId": "(default)",
+  "storageBucket": "ai-lecture-transmutation.firebasestorage.app",
+  "messagingSenderId": "2745599700",
+  "measurementId": "G-BJM0K7DET0"
 }
