@@ -1,0 +1,73 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // Global Safety Net
+    match /{document=**} {
+      allow read, write: if false;
+    }
+
+    function isValidId(id) {
+      return id is string && id.size() <= 128 && id.matches('^[a-zA-Z0-9_\\-+%]+$');
+    }
+    function incoming() {
+      return request.resource.data;
+    }
+    function existing() {
+      return resource.data;
+    }
+    function isSignedIn() {
+      return request.auth != null;
+    }
+
+    function isValidUser(data) {
+      return data.uid is string && data.uid.size() <= 128 &&
+             data.email is string && data.email.size() <= 256 &&
+             data.level is int && data.level >= 1 &&
+             data.xp is int && data.xp >= 0 &&
+             (!('lastCheckIn' in data) || (data.lastCheckIn is string && data.lastCheckIn.size() <= 32)) &&
+             (!('selectedAvatar' in data) || (data.selectedAvatar is string && data.selectedAvatar.size() <= 64)) &&
+             (!('selectedBorder' in data) || (data.selectedBorder is string && data.selectedBorder.size() <= 64));
+    }
+
+    function isValidSave(data) {
+      return data.id is string && data.id.size() <= 128 &&
+             data.user_id is string && data.user_id.size() <= 128 &&
+             data.title is string && data.title.size() <= 512 &&
+             data.text_summary is string && data.text_summary.size() <= 200000 &&
+             data.keynotes_json is string && data.keynotes_json.size() <= 300000 &&
+             data.quiz_json is string && data.quiz_json.size() <= 300000 &&
+             data.win_rate is number;
+    }
+
+    function isValidWrongQuiz(data) {
+      return data.id is string && data.id.size() <= 128 &&
+             data.user_id is string && data.user_id.size() <= 128 &&
+             data.question is string && data.question.size() <= 2000 &&
+             data.options is list && data.options.size() > 0 &&
+             data.correctIndex is int && data.correctIndex >= 0 && data.correctIndex <= 3 &&
+             data.created_at is string;
+    }
+
+    match /users/{userId} {
+      allow read: if isSignedIn() && request.auth.uid == userId;
+      allow create: if isSignedIn() && request.auth.uid == userId && isValidUser(incoming());
+      allow update: if isSignedIn() && request.auth.uid == userId && isValidUser(incoming()) && incoming().uid == existing().uid;
+    }
+
+    match /saves/{saveId} {
+      allow read: if isSignedIn() && resource.data.user_id == request.auth.uid;
+      allow list: if isSignedIn() && resource.data.user_id == request.auth.uid;
+      allow create: if isSignedIn() && incoming().user_id == request.auth.uid && isValidId(saveId) && isValidSave(incoming());
+      allow update: if isSignedIn() && existing().user_id == request.auth.uid && incoming().user_id == request.auth.uid && isValidSave(incoming());
+      allow delete: if isSignedIn() && existing().user_id == request.auth.uid;
+    }
+
+    match /wrong_quizzes/{quizId} {
+      allow read: if isSignedIn() && resource.data.user_id == request.auth.uid;
+      allow list: if isSignedIn() && resource.data.user_id == request.auth.uid;
+      allow create: if isSignedIn() && incoming().user_id == request.auth.uid && isValidId(quizId) && isValidWrongQuiz(incoming());
+      allow delete: if isSignedIn() && existing().user_id == request.auth.uid;
+    }
+  }
+}

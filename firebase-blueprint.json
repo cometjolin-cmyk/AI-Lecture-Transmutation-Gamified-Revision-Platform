@@ -1,0 +1,86 @@
+{
+  "entities": {
+    "User": {
+      "title": "User",
+      "description": "User profile with experience and level stats",
+      "type": "object",
+      "properties": {
+        "uid": { "type": "string" },
+        "email": { "type": "string" },
+        "level": { "type": "integer" },
+        "xp": { "type": "integer" },
+        "totalQuizzes": { "type": "integer" },
+        "correctAnswers": { "type": "integer" },
+        "winRate": { "type": "number" },
+        "lastCheckIn": { "type": "string" },
+        "selectedAvatar": { "type": "string" },
+        "selectedBorder": { "type": "string" },
+        "updatedAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["uid", "email", "level", "xp"]
+    },
+    "Save": {
+      "title": "Save",
+      "description": "Lecture save data with summary, keynotes, and quizzes",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "user_id": { "type": "string" },
+        "title": { "type": "string" },
+        "created_at": { "type": "string", "format": "date-time" },
+        "text_summary": { "type": "string" },
+        "keynotes_json": { "type": "string" },
+        "quiz_json": { "type": "string" },
+        "win_rate": { "type": "number" }
+      },
+      "required": [
+        "id",
+        "user_id",
+        "title",
+        "created_at",
+        "text_summary",
+        "keynotes_json",
+        "quiz_json",
+        "win_rate"
+      ]
+    },
+    "WrongQuiz": {
+      "title": "WrongQuiz",
+      "description": "Quizzes the user answered incorrectly for off-line physical immune reviews",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "user_id": { "type": "string" },
+        "save_id": { "type": "string" },
+        "save_title": { "type": "string" },
+        "question": { "type": "string" },
+        "options": { "type": "array" },
+        "correctIndex": { "type": "integer" },
+        "explanation": { "type": "string" },
+        "created_at": { "type": "string", "format": "date-time" }
+      },
+      "required": [
+        "id",
+        "user_id",
+        "question",
+        "options",
+        "correctIndex",
+        "created_at"
+      ]
+    }
+  },
+  "firestore": {
+    "/users/{userId}": {
+      "schema": "User",
+      "description": "User profiles containing level and XP stats"
+    },
+    "/saves/{saveId}": {
+      "schema": "Save",
+      "description": "Lecture notes and quiz results saved in the cloud"
+    },
+    "/wrong_quizzes/{quizId}": {
+      "schema": "WrongQuiz",
+      "description": "Wrong answers logged during turn-by-turn battles"
+    }
+  }
+}

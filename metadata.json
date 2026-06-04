@@ -1,0 +1,6 @@
+{
+  "name": "AI Academic Note Organizer",
+  "description": "Retro 8-bit Academic Note Organizer. Transmute boring university lectures into Game Boy classic RPG summaries, keynotes, and trivia battles using Gemini.",
+  "requestFramePermissions": ["microphone"],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

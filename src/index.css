@@ -1,0 +1,94 @@
+@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&family=VT323&display=swap');
+@import "tailwindcss";
+
+@theme {
+  --font-press-start: "Press Start 2P", "Courier New", Courier, monospace;
+  --font-vt: "VT323", "Courier New", Courier, monospace;
+
+  --animate-shake: shake 0.4s ease-in-out;
+  --animate-blink: blink 1.5s infinite;
+
+  @keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    15%, 45%, 75% { transform: translateX(-8px); }
+    30%, 60%, 90% { transform: translateX(8px); }
+  }
+  @keyframes blink {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0; }
+  }
+}
+
+/* Custom retro utility styles */
+.retro-border {
+  border: 4px solid #000000;
+}
+
+.retro-double-border {
+  border: 4px double #000000;
+}
+
+.retro-shadow {
+  box-shadow: 4px 4px 0px 0px rgba(0, 0, 0, 1);
+}
+
+.retro-inset-shadow {
+  box-shadow: inset 2px 2px 0px 0px rgba(0, 0, 0, 1);
+}
+
+/* 8-bit monochromatic scanlines & visual filters */
+.screen-scanlines {
+  background: linear-gradient(
+    rgba(18, 16, 16, 0) 50%,
+    rgba(0, 0, 0, 0.1) 50%
+  ), linear-gradient(
+    90deg,
+    rgba(255, 0, 0, 0.03),
+    rgba(0, 255, 0, 0.01),
+    rgba(0, 0, 255, 0.03)
+  );
+  background-size: 100% 4px, 6px 100%;
+}
+
+.retro-btn {
+  font-family: var(--font-press-start);
+  border: 4px solid #000000;
+  box-shadow: 4px 4px 0px 0px rgba(0, 0, 0, 1);
+  background-color: #FFFFFF;
+  color: #000000;
+  cursor: pointer;
+  transition: all 0.1s ease;
+  image-rendering: pixelated;
+}
+
+.retro-btn:hover, .retro-btn:active {
+  background-color: #000000;
+  color: #FFFFFF;
+  box-shadow: 2px 2px 0px 0px rgba(0, 0, 0, 1);
+  transform: translate(2px, 2px);
+}
+
+.retro-input {
+  border: 4px solid #000000;
+  background-color: #FFFFFF;
+  color: #000000;
+  box-shadow: inset 3px 3px 0px 0px rgba(0, 0, 0, 0.2);
+  outline: none;
+}
+
+.retro-input:focus {
+  border-color: #707070;
+}
+
+/* Custom scrollbars */
+::-webkit-scrollbar {
+  width: 12px;
+}
+::-webkit-scrollbar-track {
+  background: #D3D3D3;
+  border-left: 4px solid #000000;
+}
+::-webkit-scrollbar-thumb {
+  background: #707070;
+  border: 4px solid #000000;
+}
